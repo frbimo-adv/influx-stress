@@ -1,13 +1,16 @@
 # Stress tool
 
 ## Build Instructions
+
 Building `influx-stress` requires the Golang toolchain. If you do not have the Golang toolchain installed
 please follow the instructions [golang.org/doc/install](https://golang.org/doc/install)
+
 ```sh
-go get -v github.com/influxdata/influx-stress/cmd/...
+go get -v github.com/frbimo-adv/influx-stress/cmd/...
 ```
 
 ## Top Level Command
+
 ```
 Create artificial load on an InfluxDB instance
 
@@ -24,6 +27,7 @@ Usage:
 ```
 
 ## Insert Subcommand
+
 ```bash
 Insert data into InfluxDB
 
@@ -54,31 +58,37 @@ Flags:
 ## Example Usage
 
 Runs forever
+
 ```bash
 $ influx-stress insert
 ```
 
 Runs forever writing as fast as possible
+
 ```bash
 $ influx-stress insert -f
 ```
 
 Runs for 1 minute writing as fast as possible
+
 ```bash
 $ influx-stress insert -r 1m -f
 ```
 
 Writing an example series key
+
 ```bash
 $ influx-stress insert cpu,host=server,location=us-west,id=myid
 ```
 
 Writing an example series key with 20,000 series
+
 ```bash
 $ influx-stress insert -s 20000 cpu,host=server,location=us-west,id=myid
 ```
 
 Writing an example point
+
 ```bash
 $ influx-stress insert cpu,host=server,location=us-west,id=myid busy=100,idle=10,random=5i
 ```

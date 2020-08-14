@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdata/influx-stress/lineprotocol"
-	"github.com/influxdata/influx-stress/point"
+	"github.com/frbimo-adv/influx-stress/lineprotocol"
+	"github.com/frbimo-adv/influx-stress/point"
 )
 
 var (

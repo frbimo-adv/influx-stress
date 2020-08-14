@@ -11,10 +11,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/influxdata/influx-stress/lineprotocol"
-	"github.com/influxdata/influx-stress/point"
-	"github.com/influxdata/influx-stress/stress"
-	"github.com/influxdata/influx-stress/write"
+	"github.com/frbimo-adv/influx-stress/lineprotocol"
+	"github.com/frbimo-adv/influx-stress/point"
+	"github.com/frbimo-adv/influx-stress/stress"
+	"github.com/frbimo-adv/influx-stress/write"
 	"github.com/spf13/cobra"
 )
 
@@ -300,10 +300,17 @@ func (s *multiSink) Open() {
 
 func (s *multiSink) run() {
 	const timeFormat = "[2006-01-02 15:04:05]"
+
+	defer func() {
+		if r := recover(); r != nil {
+			return
+		}
+	}()
 	for r := range s.Ch {
 		for _, sink := range s.sinks {
 			select {
 			case sink.Chan() <- r:
+
 			default:
 				fmt.Fprintln(os.Stderr, time.Now().Format(timeFormat), "Failed to send to sin")
 			}
@@ -313,6 +320,7 @@ func (s *multiSink) run() {
 
 func (s *multiSink) Close() {
 	s.open = false
+	close(s.Ch)
 	for _, sink := range s.sinks {
 		sink.Close()
 	}
